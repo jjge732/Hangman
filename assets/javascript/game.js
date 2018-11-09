@@ -4,19 +4,19 @@ const methods = 5;
 
 let game = [
     {
-        blank: ['_', '_', '_', '_'],
+        // blank: ['_', '_', '_', '_'],
         word: ['h', 'i', 'y', 'a']
     },
     {
-        blank: ['_', '_', '_', '_', '_'],
+        // blank: ['_', '_', '_', '_', '_'],
         word: ['h', 'e', 'l', 'l', 'o']
     },
     {
-        blank: ['_', '_', '_', '_', '_', '_', '_'],
+        // blank: ['_', '_', '_', '_', '_', '_', '_'],
         word: ['w', 'h', 'a', 't', 's', 'u', 'p']
     },
     {
-        blank: ['_', '_', '_', '_'],
+        // blank: ['_', '_', '_', '_'],
         word: ['h', 'o', 'l', 'a']
     },
     {   
@@ -25,7 +25,8 @@ let game = [
         guesses: document.getElementById('past_guesses'),
         nbrOfGuessesLeft: document.getElementById('guessesLeft'),
         newButton: document.createElement('button'),
-        newGame: document.getElementById('newGame')
+        newGame: document.getElementById('newGame'),
+        blank: []
     },
     {   startNewGame() {
             if (words < 3) {
@@ -33,7 +34,8 @@ let game = [
                 words++;
                 game[variables].usedLetters = [];
                 game[variables].guesses.innerHTML = game[variables].usedLetters.toString().replace(/,/g, ' ');
-                game[variables].newWord.innerHTML = game[words].blank.toString().replace(/,/g, ' ');
+                // game[variables].newWord.innerHTML = game[words].blank.toString().replace(/,/g, ' ');
+                game[variables].newWord.innerHTML = this.generateBlanks();
                 game[variables].nbrOfGuessesLeft.innerHTML = 7;
                 game[variables].newButton.parentNode.removeChild(game[variables].newButton);
             }
@@ -41,7 +43,13 @@ let game = [
                 alert('No more words');
             }
     },
-        //generateBlanks();
+        generateBlanks() {
+            game[variables].blank = [];
+            for (let i = 0; i < game[words].word.length; i++) {
+                game[variables].blank.push('_');
+            }
+            return game[variables].blank;
+        },
         gameOver() {
             alert('Game over!')
             alert(`The last word was ${game[words].word.toString().replace(/,/g, '')}`);
@@ -72,7 +80,8 @@ let game = [
 // let usedLetters = [];
 // let newWord = document.getElementById('blanks');
 // let guesses = document.getElementById('past_guesses');
-game[variables].newWord.innerHTML = game[words].blank.toString().replace(/,/g, ' ');
+// game[variables].newWord.innerHTML = game[variables].blank.toString().replace(/,/g, ' ');
+game[variables].newWord.innerHTML = game[methods].generateBlanks().toString().replace(/,/g, ' ');
 game[variables].nbrOfGuessesLeft.innerHTML = 7;
 
 document.onkeyup = function(event) {
@@ -84,14 +93,13 @@ document.onkeyup = function(event) {
                 alert(`${event.key} already guessed.`);
             }
             else if (game[words].word.indexOf(event.key) !== -1) {
-                game[words].blank[game[words].word.indexOf(event.key)] = event.key;
-                game[variables].newWord.innerHTML = game[words].blank.toString().replace(/,/g, ' ');
+                game[variables].blank[game[words].word.indexOf(event.key)] = event.key;
+                game[variables].newWord.innerHTML = game[variables].blank.toString().replace(/,/g, ' ');
                 if (game[words].word.indexOf(event.key, game[words].word.indexOf(event.key) + 1) !== -1) {
-                    console.log('Wow');
-                    game[words].blank[game[words].word.indexOf(event.key, (game[words].word.indexOf(event.key)) + 1)] = event.key;
-                    game[variables].newWord.innerHTML = game[words].blank.toString().replace(/,/g, ' ');
+                    game[variables].blank[game[words].word.indexOf(event.key, (game[words].word.indexOf(event.key)) + 1)] = event.key;
+                    game[variables].newWord.innerHTML = game[variables].blank.toString().replace(/,/g, ' ');
                 }
-                if (game[words].blank.toString().replace(/,/g, ' ') === game[words].word.toString().replace(/,/g, ' ')) {
+                if (game[variables].blank.toString().replace(/,/g, ' ') === game[words].word.toString().replace(/,/g, ' ')) {
                    game[methods].youWin();
                 }
             } //append button to start new game and remove button after it is pressed
