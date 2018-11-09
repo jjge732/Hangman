@@ -23,39 +23,48 @@ let game = [
         usedLetters: [],
         newWord: document.getElementById('blanks'),
         guesses: document.getElementById('past_guesses'),
-        nbrOfGuessesLeft: document.getElementById('guessesLeft')
+        nbrOfGuessesLeft: document.getElementById('guessesLeft'),
+        newButton: document.createElement('button'),
+        newGame: document.getElementById('newGame')
     },
-    {
+    {   startNewGame() {
+            if (words < 3) {
+                alert('Next Word!')
+                words++;
+                game[variables].usedLetters = [];
+                game[variables].guesses.innerHTML = game[variables].usedLetters.toString().replace(/,/g, ' ');
+                game[variables].newWord.innerHTML = game[words].blank.toString().replace(/,/g, ' ');
+                game[variables].nbrOfGuessesLeft.innerHTML = 7;
+                game[variables].newButton.parentNode.removeChild(game[variables].newButton);
+            }
+            else {
+                alert('No more words');
+            }
+    },
         //generateBlanks();
         gameOver() {
             alert('Game over!')
             alert(`The last word was ${game[words].word.toString().replace(/,/g, '')}`);
-            words++;
-            game[variables].usedLetters = [];
+            // game[variables].usedLetters = [];
             game[variables].guesses.innerHTML = game[variables].usedLetters.toString().replace(/,/g, ' ');
-            if (words < 3) {
-                alert('Next Word!')
-            }
-            else {
-                alert('No more words');
-            }
-            game[variables].newWord.innerHTML = game[words].blank.toString().replace(/,/g, ' ');
-            game[variables].nbrOfGuessesLeft.innerHTML = 7;
+            game[variables].newGame.appendChild(game[variables].newButton);
+            game[variables].newButton.setAttribute('onclick', 'game[methods].startNewGame()');
+            game[variables].newButton.setAttribute('style', 'height: 48px; width: 96px; position: relative; left: 45%;');
+            game[variables].newButton.innerHTML = 'New Word!';
+            // game[variables].newWord.innerHTML = game[words].blank.toString().replace(/,/g, ' ');
+            // game[variables].nbrOfGuessesLeft.innerHTML = 7;
         },
 
         youWin() {
             alert('Winner!')
-            words++;
-            game[variables].usedLetters = [];
+            // game[variables].usedLetters = [];
             game[variables].guesses.innerHTML = game[variables].usedLetters.toString().replace(/,/g, ' ');
-            if (words < 3) {
-                alert('Next Word!')
-            }
-            else {
-                alert('No more words');
-            }
-            game[variables].newWord.innerHTML = game[words].blank.toString().replace(/,/g, ' ');
-            game[variables].nbrOfGuessesLeft.innerHTML = 7;
+            game[variables].newGame.appendChild(game[variables].newButton);
+            game[variables].newButton.setAttribute('onclick', 'game[methods].startNewGame()');
+            game[variables].newButton.setAttribute('style', 'height: 48px; width: 96px; position: relative; left: 45%;');
+            game[variables].newButton.innerHTML = 'New Word!';
+            // game[variables].newWord.innerHTML = game[words].blank.toString().replace(/,/g, ' ');
+            // game[variables].nbrOfGuessesLeft.innerHTML = 7;
         }
     }
 ];
