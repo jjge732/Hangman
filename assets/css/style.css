@@ -1,6 +1,6 @@
 body {
     position: relative;
-    height: 1000px;
+    height: 1200px;
 }
 
 h1, h2 {
@@ -199,6 +199,7 @@ header {
     margin-bottom: 20px;
     border-bottom: solid 2px #60559d;
     box-sizing: border-box;
+    z-index: 2;
 }
 
 footer {

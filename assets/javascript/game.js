@@ -3,7 +3,7 @@ let wordIndex = 0, wins = 0;
 
 let game = [
     {
-        word: [ ['s', 'q', 'u', 'a', 't'], ['d', 'e', 'a', 'd', 'l', 'i','f', 't'], ['b', 'e', 'n', 'c', 'h'],  ['l', 'u', 'n', 'g', 'e'], ['d', 'i', 'p']]
+        term: [ ['s', 'q', 'u', 'a', 't'], ['d', 'e', 'a', 'd', 'l', 'i','f', 't'], ['b', 'e', 'n', 'c', 'h'],  ['l', 'u', 'n', 'g', 'e'], ['d', 'i', 'p']]
     },
     {   
         usedLetters: [],
@@ -20,7 +20,7 @@ let game = [
         accessLeftContent: document.getElementById('leftContent')
     },
     {   startNewGame() {
-            if (wordIndex < game[words].word.length - 1) {
+            if (wordIndex < game[words].term.length - 1) {
                 alert('Next Word!')
                 wordIndex++;
                 game[variables].usedLetters = [];
@@ -38,7 +38,7 @@ let game = [
     },
         generateBlanks() {
             game[variables].blank = [];
-            for (let i = 0; i < game[words].word[wordIndex].length; i++) {
+            for (let i = 0; i < game[words].term[wordIndex].length; i++) {
                     game[variables].blank.push('_');
             }
             return game[variables].blank;
@@ -53,7 +53,7 @@ let game = [
         },
         gameOver() {
             alert('Game over!')
-            alert(`The last word was ${game[words].word[wordIndex].toString().replace(/,/g, '')}`);
+            alert(`The last word was ${game[words].term[wordIndex].toString().replace(/,/g, '')}`);
             this.createButton();
         },
         youWin() {
@@ -103,18 +103,18 @@ game[variables].newWord.innerHTML = game[methods].generateBlanks().toString().re
 game[variables].nbrOfGuessesLeft.innerHTML = 6;
 
 document.onkeyup = function(event) {
-    if(event.keyCode >= 65 && event.keyCode <= 90 && (game[variables].blank.toString().replace(/,/g, ' ') !== game[words].word[wordIndex].toString().replace(/,/g, ' ')) && game[variables].usedLetters.length < 6) {         
+    if(event.keyCode >= 65 && event.keyCode <= 90 && (game[variables].blank.toString().replace(/,/g, ' ') !== game[words].term[wordIndex].toString().replace(/,/g, ' ')) && game[variables].usedLetters.length < 6) {         
             if (game[variables].usedLetters.indexOf(event.key.toLowerCase()) !== -1) {
                 alert(`${event.key} already guessed.`);
             }
-            else if (game[words].word[wordIndex].indexOf(event.key.toLowerCase()) !== -1) {
-                game[variables].blank[game[words].word[wordIndex].indexOf(event.key.toLowerCase())] = event.key.toLowerCase();
+            else if (game[words].term[wordIndex].indexOf(event.key.toLowerCase()) !== -1) {
+                game[variables].blank[game[words].term[wordIndex].indexOf(event.key.toLowerCase())] = event.key.toLowerCase();
                 game[variables].newWord.innerHTML = game[variables].blank.toString().replace(/,/g, ' ');
-                for (let i = 1; i < game[words].word.length + 1; i++) { //allows for multiple of the same letters
-                    game[variables].blank[game[words].word[wordIndex].indexOf(event.key.toLowerCase(), (game[words].word[wordIndex].indexOf(event.key.toLowerCase())) + i)] = event.key.toLowerCase();
+                for (let i = 1; i < game[words].term.length + 1; i++) { //allows for multiple of the same letters
+                    game[variables].blank[game[words].term[wordIndex].indexOf(event.key.toLowerCase(), (game[words].term[wordIndex].indexOf(event.key.toLowerCase())) + i)] = event.key.toLowerCase();
                     game[variables].newWord.innerHTML = game[variables].blank.toString().replace(/,/g, ' ');
                 }
-                if (game[variables].blank.toString().replace(/,/g, ' ') === game[words].word[wordIndex].toString().replace(/,/g, ' ')) {
+                if (game[variables].blank.toString().replace(/,/g, ' ') === game[words].term[wordIndex].toString().replace(/,/g, ' ')) {
                     game[methods].youWin();
                 }
             }
