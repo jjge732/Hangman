@@ -79,7 +79,7 @@ main {
 #leftContent, #rightContent {
     background-color: #ddd;
     border: solid 2px #ccc;
-    height: 480px;
+    height: 580px;
     width: 480px;
     justify-self: center;
 }

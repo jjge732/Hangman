@@ -1,7 +1,7 @@
 // sets up variables to give more relevance to object array values
 const words = 0, variables = 1, methods = 2;
 //sets counters for the word the user is trying to determine and number of wins
-let wordIndex = 0, wins = 0;
+let wordIndex = 0, wins = 0, losses = 0;
 
 let game = [
     {
@@ -22,7 +22,9 @@ let game = [
         //create button to start new game
         newButton: document.createElement('button'),
         //create h4 for win counter
-        newH4: document.createElement('h4'),
+        newWin: document.createElement('h4'),
+        //create h4 for loss counter
+        newLoss: document.createElement('h4'),
         //creates divs for body parts of hangman
         newDiv: [document.createElement('div'), document.createElement('div'), document.createElement('div'), document.createElement('div'), document.createElement('div'), document.createElement('div')],
         //access new game div for button to be placed into
@@ -82,19 +84,25 @@ let game = [
         },
         gameOver() {
             alert('Game over!')
+            losses++;
             //displays the last word as a string with no commas
             alert(`The last word was ${game[words].term[wordIndex].toString().replace(/,/g, '')}`);
             this.createButton();    //generates button to start the game
+            if (losses > 1) { //stops duplication of loss counter
+                game[variables].accessRightContent.removeChild(game[variables].newLoss);
+            }
+            //displays & updates number of losses when win occurs
+            game[variables].accessRightContent.appendChild(game[variables].newLoss).innerHTML = `Number of losses: <br> ${losses}`;
         },
         youWin() {
             alert('Winner!')
             wins++; //updates win counter
             this.createButton();    //generates button to start next game
-            if (wins > 1) { //stops duplication of win counter
-                game[variables].accessRightContent.removeChild(game[variables].newH4);
+            if (wins > 1) { //stops duplication of counters
+                game[variables].accessRightContent.removeChild(game[variables].newWin);
             }
             //displays & updates number of wins when win occurs
-            game[variables].accessRightContent.appendChild(game[variables].newH4).innerHTML = `Number of wins: <br> ${wins}`;
+            game[variables].accessRightContent.appendChild(game[variables].newWin).innerHTML = `Number of wins: <br> ${wins}`;
         },
         generateBodyPart() {
             //switch case based on number of incorrect guesses to add body part to hangman display
